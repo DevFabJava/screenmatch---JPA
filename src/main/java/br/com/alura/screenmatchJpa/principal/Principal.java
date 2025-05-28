@@ -1,20 +1,17 @@
 package br.com.alura.screenmatchJpa.principal;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 
 import br.com.alura.screenmatchJpa.model.DadosSerie;
 import br.com.alura.screenmatchJpa.model.DadosTemporada;
 import br.com.alura.screenmatchJpa.model.Episodio;
+import br.com.alura.screenmatchJpa.model.Serie;
 import br.com.alura.screenmatchJpa.service.ConsumoApi;
 import br.com.alura.screenmatchJpa.service.ConverteDados;
 
 import java.util.ArrayList;
-import java.util.DoubleSummaryStatistics;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -89,6 +86,12 @@ import java.util.stream.Collectors;
         }
         private void listarSeriesBuscadas() {
             dadosSeries.forEach(System.out::println);
+
+            List<Serie> series = new ArrayList<>();
+            series = dadosSeries.stream().map(d -> new Serie(d)).collect(Collectors.toList());
+            series.stream().sorted(Comparator.comparing(Serie::getGenero))
+                    .forEach(System.out::println);
+
         }
     }
 
