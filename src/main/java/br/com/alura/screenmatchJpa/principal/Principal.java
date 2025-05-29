@@ -7,12 +7,20 @@ import br.com.alura.screenmatchJpa.model.DadosSerie;
 import br.com.alura.screenmatchJpa.model.DadosTemporada;
 import br.com.alura.screenmatchJpa.model.Episodio;
 import br.com.alura.screenmatchJpa.model.Serie;
+import br.com.alura.screenmatchJpa.repository.SerieRepository;
 import br.com.alura.screenmatchJpa.service.ConsumoApi;
 import br.com.alura.screenmatchJpa.service.ConverteDados;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.FluentQuery;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
     public class Principal {
@@ -24,6 +32,16 @@ import java.util.stream.Collectors;
         private final String API_KEY = "&apikey=c6994f81";
 
         private List<DadosSerie> dadosSeries = new ArrayList<>();
+
+        @Autowired
+        private SerieRepository repositorio;
+
+
+        public Principal(SerieRepository repositorio) {
+            this.repositorio = repositorio;
+
+        }
+
 
         public void exibeMenu() {
             var opcao = -1;
@@ -61,7 +79,9 @@ import java.util.stream.Collectors;
 
         private void buscarSerieWeb() {
             DadosSerie dados = getDadosSerie();
-            dadosSeries.add(dados);
+            Serie serie = new Serie(dados);
+            //dadosSeries.add(dados);
+            repositorio.save(serie);
             System.out.println(dados);
         }
 
