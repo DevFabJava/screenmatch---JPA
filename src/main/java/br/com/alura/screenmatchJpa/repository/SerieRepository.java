@@ -36,5 +36,5 @@ public interface SerieRepository extends JpaRepository<Serie,Long> {
         List<Episodio> episodiosPorSerieEAno(Serie serie, int anoLancamento);
 
 
-
+        List<Serie> findTop5ByOrderByEpisodiosDataLancamentoDesc();
 }
